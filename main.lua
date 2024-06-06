@@ -53,11 +53,17 @@ function love.update(dt)
   elseif LK('down') and personagem.y < LG.getHeight() - personagem.tam / 2 then
     personagem.y = personagem.y +  personagem.v * dt
 end
-for c = #carteira, 1, -1 down
+for c = #carteira, 1, -1 do
   if temColisao(personagem, carteira[c]) then 
     table.remove(carteira, c)
+    personagem.esc = personagem.esc + 0.05
+    personagem.tam = 50 * personagem.esc
+  end
+end
 
 end
 
 function temColisao(p1, p2)
   local dist = math.sqrt((p1.x-p2.x)^(p1.y-p2.y)^2)
+  return dist <=(p1.tam+p2.tam)
+end
